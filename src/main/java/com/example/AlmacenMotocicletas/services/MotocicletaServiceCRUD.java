@@ -31,6 +31,9 @@ public class MotocicletaServiceCRUD {
     //Create motocicleta
     public MotocicletaDTO create(MotocicletaDTO motocicletaDTO){
         Motocicleta motocicleta = mapper.fromDTO(motocicletaDTO);
+
+        validationsNewProduct(motocicleta);
+        
         return mapper.fromCollection(motocicletaRepository.save(motocicleta));
     }
 
@@ -44,5 +47,29 @@ public class MotocicletaServiceCRUD {
     //Delete motocicleta
     public void delete (String id){
         motocicletaRepository.deleteById(id);
+    }
+
+    private void validationsNewProduct(Motocicleta motocicleta) {
+        if(motocicleta.getMarca().isEmpty() || motocicleta.getMarca().length() < 3){
+            throw new Error("No hay una marca válida para guardar.");
+        }
+        if(motocicleta.getLinea().isEmpty() || motocicleta.getLinea().length() < 3){
+            throw new Error("No hay una linea válida para guardar.");
+        }
+        if(motocicleta.getModelo().isEmpty() || motocicleta.getModelo().length() < 3){
+            throw new Error("No hay un modelo válido para guardar.");
+        }
+        if(motocicleta.getCilindraje().isEmpty() || motocicleta.getCilindraje().length() < 2){
+            throw new Error("El cilindraje debe ser válido para guardar.");
+        }
+        if(motocicleta.getValor().isEmpty() || motocicleta.getValor().length() < 2){
+            throw new Error("El valor debe ser válido para guardar.");
+        }
+        if(motocicleta.getColor().isEmpty() || motocicleta.getColor().length() < 2){
+            throw new Error("No hay un color válido para guardar.");
+        }
+        if(motocicleta.getImagen().isEmpty() || motocicleta.getImagen().length() < 2){
+            throw new Error("No hay una imagen válida para guardar.");
+        }
     }
 }
